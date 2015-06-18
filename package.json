@@ -1,0 +1,17 @@
+{
+  "name": "sif",
+  "version": "1.0.0",
+  "description": "Lexer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "lexer"
+  ],
+  "author": "Austin Hanson",
+  "dependencies": {
+    "debug": "^2.2.0",
+    "sprintf-js": "^1.0.2"
+  }
+}
