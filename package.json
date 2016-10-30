@@ -13,5 +13,8 @@
   "dependencies": {
     "debug": "^2.2.0",
     "sprintf-js": "^1.0.2"
-  }
+  },
+  "typings": [
+    "index.d.ts"
+  ]
 }
