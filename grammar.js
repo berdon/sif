@@ -193,7 +193,8 @@ function Phrase(variable, productions, callback) {
 		this._callback = function(phrase, word, token, value, context, isFinal) {
 			var innerCallback = productionCallbacks[word];
 			if (innerCallback && (isFinal || innerCallback.pre)) {
-				innerCallback.call({phrase: phrase, word: word, token: token, value: value, context: context, isFinal: isFinal});
+				var context = {phrase: phrase, word: word, token: token, value: value, context: context, isFinal: isFinal};
+				innerCallback.call(context, phrase, word, token, value, context, isFinal);
 			}
 		}
 	}
