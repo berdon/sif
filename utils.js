@@ -12,8 +12,14 @@ function property(name, defaultValue) {
 
 function getter(name, defaultValue) {
 	this['_' + name] = defaultValue;
-	return function(value) {
+	return function() {
 		return this['_' + name];
+	}
+}
+
+function setter(name) {
+	return function(value) {
+		this['_' + name] = value;
 	}
 }
 
