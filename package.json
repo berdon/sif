@@ -2,7 +2,7 @@
   "name": "sif",
   "version": "1.0.0",
   "description": "Lexer",
-  "main": "index.js",
+  "main": "out/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,10 +11,10 @@
   ],
   "author": "Austin Hanson",
   "dependencies": {
-    "debug": "^2.2.0",
-    "sprintf-js": "^1.0.2"
+    "debug": "^2.6.9",
+    "sprintf-js": "^1.1.2"
   },
-  "typings": [
-    "index.d.ts"
-  ]
+  "devDependencies": {
+    "@types/node": "^14.14.32"
+  }
 }
