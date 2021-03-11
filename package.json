@@ -12,7 +12,8 @@
   "author": "Austin Hanson",
   "dependencies": {
     "debug": "^2.6.9",
-    "sprintf-js": "^1.1.2"
+    "sprintf-js": "^1.1.2",
+    "typescript-logging": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.32"

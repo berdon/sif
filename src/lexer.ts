@@ -1,8 +1,13 @@
 import { Grammar, Phrase } from "./grammar"
 import { Token, Tokenerator, Tokenizer } from "./tokenizer"
+import { Category } from "typescript-logging"
 
-const vsprintf = require('sprintf-js').vsprintf,
-      fs = require('fs');
+const log = {
+    lexer: new Category("Lexer"),
+    parsed: new Category("Lexer.Parsed")
+}
+const vsprintf = require('sprintf-js').vsprintf
+const fs = require('fs')
 
 export class Lexeme
 {
@@ -36,6 +41,7 @@ export class Lexer
     private _lexeme: Lexeme | null = null;
     private _nextLexeme: Lexeme | null = null;
     private _tokenerator: Tokenerator | null = null;
+    private _parseLevel: string[] = [];
 
     public get startVariable(): string { return this._startVariable; }
     public get grammar(): Grammar { return this._grammar; }
@@ -81,9 +87,9 @@ export class Lexer
         }
     }
 
-    private throwError(filename: string, lexeme: Lexeme | null, error: string, ...args: any[]): void {
+    private throwError(filename: string, lexeme: Lexeme | null, error: string, ...params: any[]): void {
         var args = Array.prototype.slice.call(arguments);
-        throw `Error: ${filename}:${lexeme?.line}:${lexeme?.column} - ${vsprintf(error, args)}`;
+        throw `Error: ${filename}:${lexeme?.line}:${lexeme?.column} - ${vsprintf(error, params)}`;
     }
 
     private getNextLexeme(): boolean {
@@ -118,9 +124,12 @@ export class Lexer
             firstTokens = this.grammar.getFirstTokens(phrase.production(0));
             followTokens = this.grammar.getFollowTokens(variable, phrase);
     
-            // Check to see if we match or if the first tokens contain lambda
-            if ((firstTokens.has(this.lexeme!.name!) || firstTokens.has(Token.LAMBDA.name)) &&
+            // Check to see if we match or if the first tokens contain epsilon
+            if ((firstTokens.has(this.lexeme!.name!) || firstTokens.has(Token.EPSILON.name)) &&
                 ((followTokens.has(this.nextLexeme!.name!) || i == phrases.length - 1) || Object.keys(followTokens).length == 0)) {
+                
+                log.lexer.trace(`Potential phrase (${phrase}) match for ${this.lexeme?.name} ${this.nextLexeme?.name}`)
+                
                 // Either our current token or something is a match, so lets begin
                 for (var j = 0; j < phrase.productions.length; j++) {
                     var word = phrase.production(j);
@@ -136,25 +145,31 @@ export class Lexer
                         var childContext = {
                             token: this.lexeme?.token,
                             value: this.lexeme?.value,
-                            parent: context
+                            _parent: context
                         };
+
+                        this._parseLevel.push(word);
+                        log.parsed.info(`${new Array(this._parseLevel.length).join('  ')}${word}`);
     
                         // If so, we need to go inside to check to see if it matches
                         var lastLexeme = this.lexeme;
                         if (this.innerParse(filename, word, phrases, childContext) == false) {
                             // If we're here, it didn't match, no worries
                             // Potentially wrong; might need to die fast and instead only rely on the if check / look ahead tokens
-                            if (!firstTokens.has(Token.LAMBDA.name)) {
+                            if (!firstTokens.has(Token.EPSILON.name)) {
                                 this.throwError(filename, this.lexeme, 'Unmatched grammar token: %s(%s)', this.lexeme?.token ?? null, this.lexeme?.value ?? null);
                             }
 
+                            log.lexer.warn(`Rolling back from wrong phrase: ${word} of ${phrase} {${phrase.production(j)}}`)
                             wrongPhrase = true;
                             break;
                         }
+
+                        log.parsed.info(`${new Array(this._parseLevel.length).join('  ')}${this._parseLevel.pop()}`);
     
                         // Update the parent tag
-                        delete childContext.parent;
-                        context.child = childContext;
+                        delete childContext._parent;
+                        context._child = childContext;
     
                         // Following the successful parsing of a grammar token, we issue a callback
                         if (phrase.callback) {
@@ -163,7 +178,7 @@ export class Lexer
                     } else {
                         // Not a grammar token, we're actually a token
                         // See if we failed - ergo, the token doesn't match what we expected
-                        if (this.lexeme!.name != word && word != Token.LAMBDA.name) {
+                        if (this.lexeme!.name != word && word != Token.EPSILON.name) {
                             // Throw the error
                             this.throwError(filename, this.lexeme, 'Expected %s found %s(%s) %s(%s)', word, this.lexeme?.name ?? null, this.lexeme?.value ?? null, this.nextLexeme?.name ?? null, this.nextLexeme?.value ?? null);
                         }
@@ -173,8 +188,8 @@ export class Lexer
                             phrase.callback(phrase, word, this.lexeme?.token ?? null, this.lexeme?.value ?? null, context, true);
                         }
     
-                        // If we're here, the token did match, now see if it was lambda
-                        if (word !== Token.LAMBDA.name) {
+                        // If we're here, the token did match, now see if it was epsilon
+                        if (word !== Token.EPSILON.name) {
                             // Nope, grab the next token
                             this.getNextLexeme();
     

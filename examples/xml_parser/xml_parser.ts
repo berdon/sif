@@ -1,10 +1,9 @@
-# sif
-Node.JS tokenizer/lexer that works similar to flex-bison/lex-yacc.
+import { CategoryConfiguration, CategoryServiceFactory, LogLevel } from "typescript-logging";
+import { Lexer, Tokenizer, Grammar } from "../../out";
+import data from "./token.json";
 
-# Example
-See [./examples](./examples) for some basic examples using sif.
+CategoryServiceFactory.setDefaultConfiguration(new CategoryConfiguration(LogLevel.Info));
 
-```typescript
 const grammar = new Grammar();
 grammar
     .for("ROOT",         p => p.expect("ELE"))
@@ -20,4 +19,3 @@ grammar
 const tokenizer = Tokenizer.fromJson(data);
 const lexer = new Lexer('ROOT', grammar, tokenizer);
 lexer.parse(process.argv[2]);
-```

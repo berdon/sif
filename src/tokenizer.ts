@@ -1,7 +1,5 @@
-var utils = require('./utils.js');
-
 export class Token {
-    public static readonly LAMBDA = new Token('LAMBDA');
+    public static readonly EPSILON = new Token('EPSILON');
     public static readonly UNKNOWN = new Token('UNKNOWN');
     public static readonly EOF = new Token('EOF');
 
