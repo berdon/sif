@@ -1,0 +1,8 @@
+{
+    "one": "fish",
+    "two": [ "fish" ],
+    "red": {
+        "fish": 123,
+        "blue": [ "fish", "fish" ]
+    }
+}

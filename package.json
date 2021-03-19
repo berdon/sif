@@ -1,8 +1,9 @@
 {
   "name": "sif-ts",
-  "version": "1.0.1",
-  "description": "Lexer",
+  "version": "1.0.2",
+  "description": "Typescript tokenizer and lexer.",
   "main": "out/index.js",
+  "files": [ "out "],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

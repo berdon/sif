@@ -1,6 +1,6 @@
 import { CategoryConfiguration, CategoryServiceFactory, LogLevel } from "typescript-logging";
 import { Lexer, Tokenizer, Grammar } from "../../out";
-import data from "./token.json";
+import data from "./tokens.json";
 
 CategoryServiceFactory.setDefaultConfiguration(new CategoryConfiguration(LogLevel.Info));
 

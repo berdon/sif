@@ -1,5 +1,5 @@
 import { Lexer, Tokenizer, Grammar } from "../../out";
-import data from "./token.json";
+import data from "./tokens.json";
 
 let root: any = {};
 const grammar = new Grammar();

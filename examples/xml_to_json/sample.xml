@@ -1,6 +1,6 @@
 <root>
     <item id=5>
-        <child name="some_name" foo="bar"></child>
+        <child name="some_name" foo="b\nar"></child>
         <child />
     </item>
 </root>
