@@ -1,5 +1,5 @@
 {
-  "name": "sif",
+  "name": "sif-ts",
   "version": "1.0.0",
   "description": "Lexer",
   "main": "out/index.js",
@@ -10,6 +10,11 @@
     "lexer"
   ],
   "author": "Austin Hanson",
+  "homepage": "https://github.com/berdon/sif",
+  "repository": {
+    "url": "https://github.com/berdon/sif"
+  },
+  "readme": "README.md",
   "dependencies": {
     "debug": "^2.6.9",
     "sprintf-js": "^1.1.2",
