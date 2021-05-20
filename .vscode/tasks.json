@@ -1,0 +1,38 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "typescript",
+			"tsconfig": "examples/json_parser/tsconfig.json",
+			"options": {"cwd": "examples/json_parser"},
+			"dependsOn": "Build Sif",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": {"isDefault": true, "kind": "build"},
+			"label": "Build JSON Parser"
+		},
+		{
+			"type": "typescript",
+			"tsconfig": "examples/xml_parser/tsconfig.json",
+			"options": {"cwd": "examples/xml_parser"},
+			"dependsOn": "Build Sif",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": {"isDefault": true, "kind": "build"},
+			"label": "Build XML Parser"
+		},
+		{
+			"type": "typescript",
+			"tsconfig": "examples/xml_to_json/tsconfig.json",
+			"options": {"cwd": "examples/xml_to_json"},
+			"dependsOn": "Build Sif",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": {"isDefault": true, "kind": "build"},
+			"label": "Build XML to JSON"
+		}
+	]
+}

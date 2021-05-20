@@ -1,0 +1,53 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "XML to JSON",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/examples/xml_to_json/xml_to_json.js",
+            "args": ["${workspaceFolder}/examples/xml_to_json/sample.xml"],
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ],
+            "preLaunchTask": "Build XML to JSON",
+            "internalConsoleOptions": "openOnSessionStart",
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "XML Parser",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/examples/xml_parser/xml_parser.js",
+            "args": ["${workspaceFolder}/examples/xml_parser/sample.xml"],
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ],
+            "preLaunchTask": "Build XML Parser",
+            "internalConsoleOptions": "openOnSessionStart",
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "JSON Parser",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/examples/json_parser/json_parser.js",
+            "args": ["${workspaceFolder}/examples/json_parser/sample.json"],
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ],
+            "preLaunchTask": "Build JSON Parser",
+            "internalConsoleOptions": "openOnSessionStart",
+        }
+    ]
+}
